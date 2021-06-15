@@ -1,0 +1,35 @@
+trigger:
+- master
+
+jobs:
+- job: BuildLinuxWithSonarCloud
+  displayName: Build for Linux With SonarCloud
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    CC: gcc-7
+    CXX: g++-7
+    SONAR_SCANNER_VERSION: 4.4.0.2170
+  steps:
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'sc-sq-c-family-examples'
+      scannerMode: 'CLI'
+      configMode: 'manual'
+      cliProjectKey: 'sc-sq-c-family-examples_linux-cmake-azure-sc'
+      cliProjectName: 'sc-sq-c-family-examples_linux-cmake-azure-sc'
+      cliSources: 'src'
+      extraProperties: 'sonar.cfamily.build-wrapper-output=build_wrapper_output_directory'
+  - bash: |
+      curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
+      unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+    displayName: Download and install build-wrapper
+  - bash: |
+      rm -rf build && mkdir build
+      cmake -S . -B build
+      export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
+      build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
+    workingDirectory: .
+    displayName: Build in build-wrapper
+  - task: SonarCloudAnalyze@1
