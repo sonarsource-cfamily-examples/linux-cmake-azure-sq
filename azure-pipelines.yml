@@ -9,7 +9,8 @@ jobs:
   variables:
     CC: gcc-7
     CXX: g++-7
-    SONAR_SCANNER_VERSION: 4.4.0.2170
+    SONAR_SCANNER_VERSION: 4.4.0.2170 # Find the latest version in the "Linux" link on this page:
+                                      # https://sonarcloud.io/documentation/analysis/scan/sonarscanner/
   steps:
   - task: SonarCloudPrepare@1
     inputs:
@@ -25,11 +26,13 @@ jobs:
       mkdir -p $HOME/.sonar
       curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
       unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-    displayName: Download and install build-wrapper
+    displayName: Download and install sonar-scanner
   - bash: |
       rm -rf build && mkdir build
       cmake -S . -B build
       export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
+      echo $PATH
+      ls $HOME/.sonar/build-wrapper-linux-x86
       build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
     workingDirectory: .
     displayName: Build in build-wrapper
