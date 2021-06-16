@@ -22,11 +22,15 @@ jobs:
       cliProjectName: 'sc-sq-c-family-examples_linux-cmake-azure-sc'
       cliSources: 'src'
       extraProperties: 'sonar.cfamily.build-wrapper-output=build_wrapper_output_directory'
+  # - bash: |
+  #     mkdir -p $HOME/.sonar
+  #     curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
+  #     unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+  #   displayName: Download and install sonar-scanner
   - bash: |
-      mkdir -p $HOME/.sonar
-      curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
-      unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-    displayName: Download and install sonar-scanner
+      curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+      unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
+    displayName: Download and install build wrapper
   - bash: |
       rm -rf build && mkdir build
       cmake -S . -B build
