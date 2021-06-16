@@ -28,6 +28,7 @@ jobs:
   #     unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
   #   displayName: Download and install sonar-scanner
   - bash: |
+      mkdir -p $HOME/.sonar
       curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
       unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
     displayName: Download and install build wrapper
