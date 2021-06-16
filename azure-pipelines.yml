@@ -22,6 +22,7 @@ jobs:
       cliSources: 'src'
       extraProperties: 'sonar.cfamily.build-wrapper-output=build_wrapper_output_directory'
   - bash: |
+      mkdir -p $HOME/.sonar
       curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
       unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
     displayName: Download and install build-wrapper
