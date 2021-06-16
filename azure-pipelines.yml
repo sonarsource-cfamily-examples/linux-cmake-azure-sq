@@ -1,11 +1,10 @@
 jobs:
 - job: BuildLinuxWithSonarCloud
-  displayName: Build for Linux With SonarCloud
+  displayName: Build for Linux\CMake With SonarCloud
   pool:
     vmImage: 'ubuntu-latest'
   variables:
-    SONAR_SCANNER_VERSION: 4.4.0.2170 # Find the latest version in the "Linux" link on this page:
-                                      # https://sonarcloud.io/documentation/analysis/scan/sonarscanner/
+    BUILD_WRAPPER_DOWNLOAD_URL: https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
   steps:
   - task: SonarCloudPrepare@1
     inputs:
@@ -19,11 +18,11 @@ jobs:
       extraProperties: 'sonar.cfamily.build-wrapper-output=build_wrapper_output_directory'
   - bash: |
       mkdir -p $HOME/.sonar
-      curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+      curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{variables.BUILD_WRAPPER_DOWNLOAD_URL}}
       unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
     displayName: Download and install build wrapper
   - bash: |
-      rm -rf build && mkdir build
+      mkdir build
       cmake -S . -B build
       export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
       build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
