@@ -11,11 +11,7 @@ jobs:
       SonarCloud: 'SonarCloud'
       organization: 'sc-sq-c-family-examples'
       scannerMode: 'CLI'
-      configMode: 'manual'
-      cliProjectKey: 'sc-sq-c-family-examples_linux-cmake-azure-sc'
-      cliProjectName: 'sc-sq-c-family-examples_linux-cmake-azure-sc'
-      cliSources: 'src'
-      extraProperties: 'sonar.cfamily.build-wrapper-output=build_wrapper_output_directory'
+      configMode: 'file'
   - bash: |
       mkdir -p $HOME/.sonar
       curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{variables.BUILD_WRAPPER_DOWNLOAD_URL}}
