@@ -33,6 +33,8 @@ jobs:
       unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
     displayName: Download and install build wrapper
   - bash: |
+      gcc --version
+      g++ --version
       rm -rf build && mkdir build
       cmake -S . -B build
       export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
