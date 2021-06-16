@@ -17,7 +17,7 @@ It is very easy to analyze a C/C++/Objective-C project with SonarCloud:
 .. Open Project settings (in the bottom left corner)
 .. Open "Service connections" page (in the Pipelines category)
 .. Press "New connection" and select the "SonarCloud"
-.. Add fill in the `SONAR_TOKEN`
+.. Fill in the `SONAR_TOKEN`
 .. Name your connection `SonarCloud` (to reference it later in `azure-pipelines.yml`
 . In your `azure-pipelines.yml` file:
 .. Add the `SonarCloudPrepare` task and configure it:
