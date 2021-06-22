@@ -1,6 +1,6 @@
 jobs:
 - job: BuildLinuxWithSonarQube
-  displayName: Build for Linux\Autotools With SonarQube
+  displayName: Build for Linux\CMake With SonarQube
   pool:
     vmImage: 'ubuntu-latest'
   steps:
